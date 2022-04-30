@@ -1,6 +1,8 @@
-require_relative "boot"
+# frozen_string_literal: true
 
-require "rails/all"
+require_relative 'boot'
+
+require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -8,6 +10,10 @@ Bundler.require(*Rails.groups)
 
 module UrlShortener
   class Application < Rails::Application
+    console do
+      ActiveRecord::Base.connection
+    end
+
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
@@ -23,5 +29,6 @@ module UrlShortener
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.eager_load_paths << Rails.root.join('lib')
   end
 end
