@@ -21,21 +21,11 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #  index_users_on_username              (username) UNIQUE
 #
-class User < ApplicationRecord
-  devise :database_authenticatable, :recoverable, :validatable
-
-  validates :email, :encrypted_password, :username, presence: true
-  validates :email, email: true
-
-  has_many :urls
-
-  validates_uniqueness_of :email, :username
-
-  before_validation :set_default_password, on: :create, if: ->(i) { i.password.blank? }
-
-  private
-
-  def set_default_password
-    self.password = SecureRandom.uuid
+FactoryBot.define do
+  factory :user do
+    sequence(:first_name) { |n| "FirstName - #{n}" }
+    sequence(:last_name) { |n| "LastName - #{n}" }
+    sequence(:username) { |n| "UserName - #{n}" }
+    email { Faker::Internet.email }
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: sessions
@@ -20,5 +22,9 @@
 #
 FactoryBot.define do
   factory :session do
+    expires_at { 3.days.from_now }
+    factory :user_session do
+      association :resource, factory: :user
+    end
   end
 end

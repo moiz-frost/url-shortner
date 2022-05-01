@@ -2,8 +2,8 @@
 
 require 'redis'
 
-module Lib::Service
-  class Redis
+module Lib
+  class Service::Redis
     class << self
       def client
         Redis.new(

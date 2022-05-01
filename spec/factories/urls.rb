@@ -18,10 +18,14 @@
 #  index_urls_on_resource   (resource_type,resource_id)
 #  index_urls_on_short_url  (short_url) UNIQUE
 #
-require 'test_helper'
+FactoryBot.define do
+  factory :url do
+    expires_at { 3.days.from_now }
+    sequence(:long_url) { |n| "LONG_URL #{n}" }
+    sequence(:short_url) { |n| "SHORT_URL #{n}" }
 
-class UrlTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+    trait :with_user do
+      association :resource, factory: :user
+    end
+  end
 end

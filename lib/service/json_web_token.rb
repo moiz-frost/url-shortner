@@ -1,7 +1,7 @@
 require 'jwt'
 
-module Lib::Service
-  class JsonWebToken
+module Lib
+  class Service::JsonWebToken
     def self.encode(payload)
       JWT.encode(payload, Rails.application.credentials[:jwt_secret])
     end
