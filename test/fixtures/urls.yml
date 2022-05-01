@@ -1,4 +1,18 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: urls
+#
+#  id         :bigint           not null, primary key
+#  expires_at :datetime
+#  long_url   :string
+#  short_url  :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_urls_on_short_url  (short_url) UNIQUE
+#
 
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately
