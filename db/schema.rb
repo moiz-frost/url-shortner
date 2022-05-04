@@ -29,15 +29,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_30_190535) do
   end
 
   create_table "urls", force: :cascade do |t|
-    t.string "long_url"
-    t.string "short_url"
+    t.string "original"
+    t.string "key"
     t.datetime "expires_at"
     t.string "resource_type"
     t.bigint "resource_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_urls_on_key", unique: true
     t.index ["resource_type", "resource_id"], name: "index_urls_on_resource"
-    t.index ["short_url"], name: "index_urls_on_short_url", unique: true
   end
 
   create_table "users", force: :cascade do |t|
