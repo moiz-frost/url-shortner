@@ -19,6 +19,8 @@
 #  index_sessions_on_token     (token) UNIQUE
 #
 class Session < ApplicationRecord
+  include Expirable
+
   DEFAULT_EXPIRATION_TIME = 1.month.freeze
 
   belongs_to :resource, polymorphic: true
@@ -29,19 +31,13 @@ class Session < ApplicationRecord
 
   scope :active, -> { where(Session.arel_table[:expires_at].gt(Time.current)) }
 
-  def expire!
-    return unless expires_at > Time.current
-
-    update!(expires_at: Time.current)
-  end
-
   private
 
   def set_token_and_expiration
     self.expires_at ||= DEFAULT_EXPIRATION_TIME.from_now
     self.token = loop do
       random_token = SecureRandom.urlsafe_base64(nil, false)
-      break random_token unless Session.exists?(token: random_token)
+      break random_token unless Session.exists?(token: random_token) # can use bloom filter here for optimization
     end
   end
 end

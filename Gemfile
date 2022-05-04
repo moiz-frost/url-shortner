@@ -67,4 +67,5 @@ end
 group :test do
   gem 'simplecov'
   gem 'simplecov-lcov'
+  gem 'timecop'
 end

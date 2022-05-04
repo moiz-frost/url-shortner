@@ -9,6 +9,7 @@
 #  encrypted_password     :string           not null
 #  first_name             :string
 #  last_name              :string
+#  phone                  :string
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  username               :string
@@ -22,6 +23,8 @@
 #  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
+  include Phonify
+
   devise :database_authenticatable, :recoverable, :validatable
 
   validates :email, :encrypted_password, :username, presence: true

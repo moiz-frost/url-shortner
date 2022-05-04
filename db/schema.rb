@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_30_190535) do
     t.string "first_name"
     t.string "last_name"
     t.string "username"
+    t.string "phone"
     t.string "email", null: false
     t.string "encrypted_password", null: false
     t.string "reset_password_token"

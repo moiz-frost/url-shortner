@@ -7,6 +7,7 @@
 #  encrypted_password     :string           not null
 #  first_name             :string
 #  last_name              :string
+#  phone                  :string
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  username               :string

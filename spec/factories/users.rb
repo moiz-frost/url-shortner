@@ -9,6 +9,7 @@
 #  encrypted_password     :string           not null
 #  first_name             :string
 #  last_name              :string
+#  phone                  :string
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  username               :string
@@ -26,6 +27,7 @@ FactoryBot.define do
     sequence(:first_name) { |n| "FirstName - #{n}" }
     sequence(:last_name) { |n| "LastName - #{n}" }
     sequence(:username) { |n| "UserName - #{n}" }
+    password { SecureRandom.uuid }
     email { Faker::Internet.email }
   end
 end

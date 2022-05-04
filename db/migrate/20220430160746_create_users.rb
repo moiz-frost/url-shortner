@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :first_name
       t.string :last_name
       t.string :username, index: { unique: true }
+      t.string :phone
 
       ## Database authenticatable
       t.string :email,              null: false, index: { unique: true }
