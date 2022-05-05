@@ -22,6 +22,7 @@ class Url < ApplicationRecord
   include Expirable
 
   belongs_to :resource, optional: true
+  has_many :url_views
 
   validates :key, uniqueness: true
   validates :original, :key, presence: true

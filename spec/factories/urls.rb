@@ -21,8 +21,8 @@
 FactoryBot.define do
   factory :url do
     expires_at { 3.days.from_now }
-    sequence(:original) { |n| "LONG_URL #{n}" }
-    sequence(:key) { |n| "SHORT_URL #{n}" }
+    original { Faker::Internet.url }
+    key { Base62.encode(Faker::Number.number) }
 
     trait :with_user do
       association :resource, factory: :user

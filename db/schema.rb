@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_30_190535) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_05_083436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,12 +20,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_30_190535) do
     t.string "token", null: false
     t.datetime "expires_at", null: false
     t.datetime "last_active_at"
-    t.inet "sign_in_ip"
-    t.inet "current_ip"
+    t.string "sign_in_ip"
+    t.string "current_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["resource_type", "resource_id"], name: "index_sessions_on_resource"
     t.index ["token"], name: "index_sessions_on_token", unique: true
+  end
+
+  create_table "url_views", force: :cascade do |t|
+    t.bigint "url_id", null: false
+    t.datetime "viewed_at", null: false
+    t.string "ip"
+    t.string "referer"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url_id"], name: "index_url_views_on_url_id"
   end
 
   create_table "urls", force: :cascade do |t|
@@ -56,4 +67,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_30_190535) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "url_views", "urls"
 end

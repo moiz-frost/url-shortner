@@ -3,11 +3,11 @@
 # Table name: sessions
 #
 #  id             :bigint           not null, primary key
-#  current_ip     :inet
+#  current_ip     :string
 #  expires_at     :datetime         not null
 #  last_active_at :datetime
 #  resource_type  :string           not null
-#  sign_in_ip     :inet
+#  sign_in_ip     :string
 #  token          :string           not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

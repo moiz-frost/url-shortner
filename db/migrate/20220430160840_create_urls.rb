@@ -7,6 +7,7 @@ class CreateUrls < ActiveRecord::Migration[7.0]
       t.string :key, index: { unique: true }
       t.datetime :expires_at
       t.references :resource, polymorphic: true, index: true
+      t.integer :view_count, default: 0, null: false
 
       t.timestamps null: false
     end
