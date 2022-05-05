@@ -129,6 +129,8 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.15.0)
+    mock_redis (0.31.0)
+      ruby2_keywords
     msgpack (1.5.1)
     net-imap (0.2.3)
       digest
@@ -227,6 +229,7 @@ GEM
     rubocop-ast (1.1.0)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.10.1)
+    ruby2_keywords (0.0.5)
     rufus-scheduler (3.8.1)
       fugit (~> 1.1, >= 1.1.6)
     sidekiq (6.4.2)
@@ -277,6 +280,7 @@ DEPENDENCIES
   faker
   jsonb_accessor
   jwt
+  mock_redis
   pg
   phonelib
   puma (~> 5.0)
