@@ -23,6 +23,7 @@ FactoryBot.define do
     expires_at { 3.days.from_now }
     original { Faker::Internet.url }
     key { Base62.encode(Faker::Number.number) }
+    view_count { 0 }
 
     trait :with_user do
       association :resource, factory: :user

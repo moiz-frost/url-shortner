@@ -1,0 +1,4 @@
+update_url_view_count_job:
+  cron: '*/5 * * * *'
+  class: 'UpdateUrlViewCountJob'
+  queue: update_counts

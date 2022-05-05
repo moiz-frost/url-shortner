@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_05_083436) do
     t.datetime "expires_at"
     t.string "resource_type"
     t.bigint "resource_id"
+    t.integer "view_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_urls_on_key", unique: true
