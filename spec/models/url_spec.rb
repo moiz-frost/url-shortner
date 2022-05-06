@@ -39,6 +39,12 @@ RSpec.describe Url, type: :model do
         create(:url, original: 'http://www.google.com', key: '123')
       end.to_not raise_exception(ActiveRecord::RecordInvalid) { |error| expect(error.message).to eq "Validation failed: Original can't be blank" }
     end
+
+    it 'should set a unique number when a new url is created' do
+      url = create(:url, original: 'http://www.google.com', key: '123')
+      expect(url.number).to be_present
+      expect(url.number.first).to eq 'U'
+    end
   end
 
   context 'uniqueness validations' do
@@ -95,6 +101,17 @@ RSpec.describe Url, type: :model do
 
     it 'should convert original url to a decoded url form' do
       expect(@url1.original).to eq 'http://google.com/foo?bar=at#anchor&title=title1 title2 title3'
+    end
+  end
+
+  context 'frozen validations' do
+    it 'should prevent url number from being updated' do
+      url = create(:url, original: 'http://www.google.com', key: '123')
+      expect(url.number).to be_present
+
+      expect do
+        url.update!(number: '123')
+      end.to raise_exception(ActiveRecord::RecordInvalid) { |error| expect(error.message).to eq 'Validation failed: Number cannot be changed' }
     end
   end
 end

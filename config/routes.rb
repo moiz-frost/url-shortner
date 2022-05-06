@@ -13,4 +13,12 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   mount Sidekiq::Web => '/sidekiq'
+
+  namespace :api do
+    namespace :v1 do
+      resources :urls, only: [:index, :show], param: :number do
+        resources :url_views, only: [:index, :show], param: :number
+      end
+    end
+  end
 end

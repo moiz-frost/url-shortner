@@ -25,6 +25,14 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
+  context 'presence validations' do
+    it 'should set a unique number when a new user is created' do
+      user = create(:user)
+      expect(user.number).to be_present
+      expect(user.number.first).to eq 'U'
+    end
+  end
+
   context 'phone validations' do
     before do
       @user = build(:user)

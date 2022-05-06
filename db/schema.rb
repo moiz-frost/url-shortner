@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_05_083436) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_06_103046) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: :cascade do |t|
+    t.string "key", null: false
+    t.boolean "is_active", default: false, null: false
+    t.boolean "is_deleted", default: false, null: false
+    t.datetime "deleted_at"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_api_keys_on_deleted_at"
+    t.index ["key"], name: "index_api_keys_on_key", unique: true
+    t.index ["user_id"], name: "index_api_keys_on_user_id"
+  end
 
   create_table "sessions", force: :cascade do |t|
     t.string "resource_type", null: false
@@ -40,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_05_083436) do
   end
 
   create_table "urls", force: :cascade do |t|
+    t.string "number"
     t.string "original"
     t.string "key"
     t.datetime "expires_at"
@@ -49,10 +63,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_05_083436) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_urls_on_key", unique: true
+    t.index ["number"], name: "index_urls_on_number", unique: true
     t.index ["resource_type", "resource_id"], name: "index_urls_on_resource"
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "number"
     t.string "first_name"
     t.string "last_name"
     t.string "username"
@@ -64,9 +80,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_05_083436) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["number"], name: "index_users_on_number", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "api_keys", "users"
   add_foreign_key "url_views", "urls"
 end

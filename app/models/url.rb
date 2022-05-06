@@ -19,9 +19,11 @@
 #  index_urls_on_resource  (resource_type,resource_id)
 #
 class Url < ApplicationRecord
+  include Numerify
   include Expirable
 
-  belongs_to :resource, optional: true
+  belongs_to :resource, polymorphic: true, optional: true
+
   has_many :url_views
 
   validates :key, uniqueness: true

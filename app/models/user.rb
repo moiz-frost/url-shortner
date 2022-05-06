@@ -23,6 +23,7 @@
 #  index_users_on_username              (username) UNIQUE
 #
 class User < ApplicationRecord
+  include Numerify
   include Phonify
 
   devise :database_authenticatable, :recoverable, :validatable
