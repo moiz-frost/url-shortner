@@ -19,9 +19,5 @@ module UrlService
     private
 
     attr_reader :long_url, :resource
-
-    def redis
-      Service::Redis.client
-    end
   end
 end

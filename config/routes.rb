@@ -21,4 +21,8 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get ':key', to: 'redirect#action', constraints: { key: Regex::BASE62_UNIQUE_CHARACTERS_REGEX }
+
+  redirect '/'
 end

@@ -13,7 +13,7 @@ module Api
 
       def set_url
         @url = Url.find_by!(number: params[:number])
-      rescue StandardError
+      rescue ActiveRecord::RecordNotFound
         render status: :not_found
       end
     end
