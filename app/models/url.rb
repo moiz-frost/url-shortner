@@ -27,7 +27,7 @@ class Url < ApplicationRecord
   has_many :url_views
 
   validates :key, uniqueness: true
-  validates :original, :key, presence: true
+  validates :key, presence: true
   validates :original, http_url: true, if: ->(i) { i.original.present? }
 
   before_validation :decode_url
@@ -35,7 +35,8 @@ class Url < ApplicationRecord
   alias_attribute :long, :original
   alias_attribute :short, :key
 
-  scope :active, -> { where(Session.arel_table[:expires_at].gt(Time.current)) }
+  scope :active, -> { where(Url.arel_table[:expires_at].lt(Time.current)) }
+  scope :unused, -> { where(original: [nil, '']) }
 
   private
 

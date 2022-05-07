@@ -48,6 +48,7 @@ gem 'jwt'
 gem 'pg'
 gem 'phonelib'
 gem 'redis'
+gem 'redlock'
 gem 'sidekiq'
 gem 'sidekiq-cron'
 

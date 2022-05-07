@@ -1,4 +1,9 @@
 update_url_view_count_job:
-  cron: '*/5 * * * *'
+  cron: '*/5 * * * *' # every 5 min
   class: 'UpdateUrlViewCountJob'
   queue: update_counts
+
+create_url_job:
+  cron: '* * * * *' # every 1 min
+  class: 'CreateUrlJob'
+  queue: create_urls

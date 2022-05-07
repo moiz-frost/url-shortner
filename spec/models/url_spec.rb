@@ -22,16 +22,16 @@ require 'rails_helper'
 
 RSpec.describe Url, type: :model do
   context 'presence validations' do
-    it 'should validate presence of original and key' do
+    it 'should validate presence and key' do
       expect do
         create(:url, original: '', key: '')
-      end.to raise_exception(ActiveRecord::RecordInvalid) { |error| expect(error.message).to eq "Validation failed: Original can't be blank, Key can't be blank" }
+      end.to raise_exception(ActiveRecord::RecordInvalid) { |error| expect(error.message).to eq "Validation failed: Key can't be blank" }
     end
 
-    it 'should validate presence of original' do
+    it 'should validate presence of key only' do
       expect do
         create(:url, original: '', key: '123')
-      end.to raise_exception(ActiveRecord::RecordInvalid) { |error| expect(error.message).to eq "Validation failed: Original can't be blank" }
+      end.to_not raise_exception(ActiveRecord::RecordInvalid) { |error| expect(error.message).to eq "Validation failed: Original can't be blank" }
     end
 
     it 'should corrently validate original and key' do
@@ -112,6 +112,33 @@ RSpec.describe Url, type: :model do
       expect do
         url.update!(number: '123')
       end.to raise_exception(ActiveRecord::RecordInvalid) { |error| expect(error.message).to eq 'Validation failed: Number cannot be changed' }
+    end
+  end
+
+  context 'scopes' do
+    it 'active: should return correct records when they are expired' do
+      Timecop.freeze
+
+      create(:url, original: 'http://google.com/', key: '1', expires_at: Time.current + 1)
+      create(:url, original: 'http://google.com/', key: '2', expires_at: Time.current)
+      url3 = create(:url, original: 'http://google.com/', key: '3', expires_at: Time.current - 1)
+      url4 = create(:url, original: 'http://google.com/', key: '4', expires_at: Time.current - 1)
+      url5 = create(:url, original: 'http://google.com/', key: '5', expires_at: Time.current - 1)
+
+      expect(Url.active.map(&:id)).to match [url3.id, url4.id, url5.id]
+
+      Timecop.return
+    end
+
+    it 'unused: should return correct unused' do
+      create(:url, original: 'http://google.com/', key: '1')
+      create(:url, original: 'http://google.com/', key: '2')
+      create(:url, original: 'http://google.com/', key: '3')
+      url4 = create(:url, original: '', key: '4')
+      url5 = create(:url, original: '', key: '5')
+      url6 = create(:url, original: nil, key: '6')
+
+      expect(Url.unused.map(&:id)).to match [url4.id, url5.id, url6.id]
     end
   end
 end
