@@ -3,6 +3,8 @@
 module Api
   module V1
     class BaseController < ActionController::API
+      include ActionController::HttpAuthentication::Basic::ControllerMethods
+      include ActionController::HttpAuthentication::Token::ControllerMethods
       include ActionController::RequestForgeryProtection
 
       protect_from_forgery with: :null_session
@@ -15,12 +17,9 @@ module Api
       end
 
       def authenticate_user_with_token
-        return false unless request.headers['X_USER_API_KEY'].present?
-
-        @user = ApiKey.find_sole_by(key: request.headers['X_USER_API_KEY']).user
-        true
-      rescue ActiveRecord::RecordNotFound, ActiveRecord::SoleRecordExceeded
-        false
+        authenticate_or_request_with_http_token do |token, _options|
+          ApiKey.find_by_key(token)
+        end
       end
 
       def handle_bad_authentication

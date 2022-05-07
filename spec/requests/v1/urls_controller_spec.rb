@@ -14,14 +14,14 @@ RSpec.describe Api::V1::UrlsController, type: :request do
 
     @headers = {
       'Accept' => 'application/json',
-      'X_USER_API_KEY' => @api_key.key,
+      'Authorization' => "Token #{@api_key.key}",
     }
   end
 
   context 'validate token' do
     it 'returns 400 when invalid token is set' do
       get "/api/v1/urls/#{@url1.number}", headers: {
-        'X_USER_API_KEY' => '123',
+        'Authorization' => 'Token 123',
       }
 
       expect(response).to have_http_status 401

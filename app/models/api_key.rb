@@ -28,8 +28,8 @@ class ApiKey < ApplicationRecord
 
   def generate_api_key
     loop do
-      token = Devise.friendly_token 40
-      break "tkn_#{token}" unless ApiKey.where(key: token).count.positive?
+      key = Devise.friendly_token 40
+      break "tkn_#{key}" unless ApiKey.exists?(key: key)
     end
   end
 
