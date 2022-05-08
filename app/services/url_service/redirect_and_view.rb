@@ -1,6 +1,6 @@
 module UrlService
-  class RedirectAndView
-    include Callable
+  class RedirectAndView < ApplicationService
+    attr_reader :key, :user_agent, :ip, :referer, :viewed_at
 
     def initialize(key:, user_agent: '', ip: '', referer: '', viewed_at: Time.current)
       @key = key
@@ -23,9 +23,5 @@ module UrlService
     rescue StandardError
       nil
     end
-
-    private
-
-    attr_reader :key, :user_agent, :ip, :referer, :viewed_at
   end
 end

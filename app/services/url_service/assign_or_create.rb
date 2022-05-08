@@ -1,6 +1,6 @@
 module UrlService
-  class AssignOrCreate
-    include Callable
+  class AssignOrCreate < ApplicationService
+    attr_reader :long_url, :resource
 
     def initialize(long_url:, resource: nil)
       @long_url = long_url
@@ -15,9 +15,5 @@ module UrlService
         expires_at: Time.current + Constants::Url::DEFAULT_EXPIRY
       )
     end
-
-    private
-
-    attr_reader :long_url, :resource
   end
 end

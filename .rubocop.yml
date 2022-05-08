@@ -127,3 +127,7 @@ Style/ClassVars:
 
 Naming/MethodParameterName:
   Enabled: false
+
+Lint/MissingSuper:
+  Exclude:
+    - 'app/services/**/*'

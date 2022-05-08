@@ -1,6 +1,6 @@
 module UrlService
-  class GetLongUrl
-    include Callable
+  class GetLongUrl < ApplicationService
+    attr_reader :key
 
     def initialize(key:)
       @key = key
@@ -9,9 +9,5 @@ module UrlService
     def call
       Url.find_by_key(key)&.long
     end
-
-    private
-
-    attr_reader :key
   end
 end

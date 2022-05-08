@@ -1,7 +1,5 @@
 module UrlService
-  class Create
-    include Callable
-
+  class Create < ApplicationService
     def call
       new_count = redis.incr(Constants::GLOBAL_URL_COUNTER_KEY)
       new_key = Base62.encode new_count
