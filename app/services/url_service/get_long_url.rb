@@ -7,7 +7,7 @@ module UrlService
     end
 
     def call
-      Url.find_by_key(key)&.long
+      Url.find_by_key(key)&.long || ''
     end
   end
 end
